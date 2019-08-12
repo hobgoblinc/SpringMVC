@@ -20,12 +20,18 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 --  Table structure for `spring_mvc_user`
 -- ----------------------------
-DROP TABLE IF EXISTS `spring_mvc_user`;
-CREATE TABLE `spring_mvc_user` (
+DROP TABLE IF EXISTS `customers`;
+CREATE TABLE `customers` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `firstName` varchar(32) DEFAULT NULL,
-  `lastName` varchar(32) DEFAULT NULL,
-  `password` varchar(32) DEFAULT NULL,
+  `company` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  `state` varchar(2) DEFAULT NULL,
+  `business` varchar(2) DEFAULT NULL,
+  `source` varchar(2) DEFAULT NULL,
+  `counselor` varchar(255) DEFAULT NULL,
+  `income` double(12, 2) DEFAULT NULL,
+  `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -33,7 +39,7 @@ CREATE TABLE `spring_mvc_user` (
 --  Records of `spring_mvc_user`
 -- ----------------------------
 BEGIN;
-INSERT INTO `spring_mvc_user` VALUES ('1', 'taylor', 'hanqun', '123456'), ('2', 'Kobe', 'Bryant', '131415');
+INSERT INTO `customers` VALUES ('1', '有限公司', 'swift', '15527485868','1', '1','1', '销售人员', '0.00', now()), ('2', '有限公司2', 'jack', '15527485868','1', '2','1', '销售人员', '100.00', now());
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

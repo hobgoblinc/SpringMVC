@@ -1,16 +1,17 @@
 package com.cenyol.example.controller;
 
-import com.cenyol.example.model.UserEntity;
-import com.cenyol.example.model.aspectj.Performance;
-import com.cenyol.example.model.aspectj.PerformanceImpl;
+import com.cenyol.example.entity.UserEntity;
+import com.cenyol.example.model.PageParam;
 import com.cenyol.example.repository.UserRepository;
+import com.cenyol.example.service.UserService;
+import com.cenyol.example.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 /**
@@ -18,6 +19,9 @@ import java.util.List;
  */
 @Controller
 public class MainController {
+
+    @Autowired
+    private UserServiceImpl userService;
 
     // 自动装配
     @Autowired
@@ -42,6 +46,21 @@ public class MainController {
         return "userManage";
     }
 
+    @RequestMapping(value = "/userPage", method = RequestMethod.GET)
+    public String indexAll(@RequestParam("page")int page, @RequestParam("pageSize")int pageSize, String property, ModelMap modelMap) {
+        PageParam pageParam = new PageParam(page - 1, pageSize, "id");
+        Page<UserEntity> result = userService.getUsersPage(pageParam, UserEntity.class);
+        int pageNum = result.getTotalPages();
+        int nowPage = result.getNumber() + 1;
+        Long total = result.getTotalElements();
+        List<UserEntity> userEntityList = result.getContent();
+        modelMap.addAttribute("userList", userEntityList);
+        modelMap.addAttribute("totalPages", pageNum);
+        modelMap.addAttribute("currentPage", nowPage);
+        modelMap.addAttribute("totalElements", total);
+        return "userManage";
+    }
+
     // 添加用户表单页面
     @RequestMapping(value = "/addUser", method = RequestMethod.GET)
     public String addUser(){
@@ -58,7 +77,7 @@ public class MainController {
         userRepository.saveAndFlush(userEntity);
 
         // 返回重定向页面
-        return "redirect:/users";
+        return "redirect:/userPage";
     }
 
     // 查看用户详细信息
@@ -84,12 +103,13 @@ public class MainController {
     @RequestMapping(value = "/updateUserPost", method = RequestMethod.POST)
     public String updateUserPost(@ModelAttribute("user") UserEntity userEntity){
         userRepository.updateUser(
-                userEntity.getFirstName(),
-                userEntity.getLastName(),
-                userEntity.getPassword(),
-                userEntity.getId()
+                userEntity.getCompany(),
+                userEntity.getName(),
+                userEntity.getPhone(),
+                userEntity.getId(),
+                userEntity.getState()
         );
-        return "redirect:/users";
+        return "redirect:/userPage";
     }
 
     // 删除用户
@@ -99,6 +119,6 @@ public class MainController {
         userRepository.delete(userId);
         // 立即刷新数据库
         userRepository.flush();
-        return "redirect:/users";
+        return "redirect:/userPage";
     }
 }
