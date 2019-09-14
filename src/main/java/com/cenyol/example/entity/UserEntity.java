@@ -1,6 +1,7 @@
 package com.cenyol.example.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -9,7 +10,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "customers", schema = "", catalog = "mysql")
-public class UserEntity {
+public class UserEntity implements Serializable{
     private int id;//机会号
     private String company;//公司名称
     private String name;//联系人
@@ -20,9 +21,30 @@ public class UserEntity {
     private String counselor;//销售顾问
     private Date createTime;//创建时间
     private BigDecimal income;//销售金额
+    private String service_type;
+    private String customer_type;
+
+    @Column(name = "SERVICE_TYPE")
+    public String getService_type() {
+        return service_type;
+    }
+
+    public void setService_type(String service_type) {
+        this.service_type = service_type;
+    }
+
+    @Column(name = "CUSTOMER_TYPE")
+    public String getCustomer_type() {
+        return customer_type;
+    }
+
+    public void setCustomer_type(String customer_type) {
+        this.customer_type = customer_type;
+    }
 
     @Id
-    @Column(name = "id", nullable = false, insertable = true, updatable = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -31,7 +53,7 @@ public class UserEntity {
         this.id = id;
     }
 
-    @Column(name = "phone", nullable = true, insertable = true, updatable = true, length = 45)
+    @Column(name = "PHONE", nullable = true, insertable = true, updatable = true, length = 45)
     public String getPhone() {
         return phone;
     }
@@ -40,7 +62,7 @@ public class UserEntity {
         this.phone = phone;
     }
 
-    @Column(name = "source", nullable = true, insertable = true, updatable = true, length = 45)
+    @Column(name = "SOURCE", nullable = true, insertable = true, updatable = true, length = 45)
     public String getSource() {
         return source;
     }
@@ -50,7 +72,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "company", nullable = true, insertable = true, updatable = true, length = 45)
+    @Column(name = "COMPANY", nullable = true, insertable = true, updatable = true, length = 45)
     public String getCompany() {
         return company;
     }
@@ -60,7 +82,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "name", nullable = true, insertable = true, updatable = true, length = 45)
+    @Column(name = "NAME", nullable = true, insertable = true, updatable = true, length = 45)
     public String getName() {
         return name;
     }
@@ -70,7 +92,7 @@ public class UserEntity {
     }
 
     @Basic
-    @Column(name = "counselor", nullable = true, insertable = true, updatable = true, length = 45)
+    @Column(name = "COUNSELOR", nullable = true, insertable = true, updatable = true, length = 45)
     public String getCounselor() {
         return counselor;
     }
@@ -79,7 +101,7 @@ public class UserEntity {
         this.counselor = counselor;
     }
 
-    @Column(name = "business", nullable = true, insertable = true, updatable = true, length = 45)
+    @Column(name = "BUSINESS", nullable = true, insertable = true, updatable = true, length = 45)
     public String getBusiness() {
         return business;
     }
@@ -88,7 +110,7 @@ public class UserEntity {
         this.business = business;
     }
 
-    @Column(name = "income", nullable = true, insertable = true, updatable = true, precision = 12, scale = 2)
+    @Column(name = "INCOME", nullable = true, insertable = true, updatable = true, precision = 12, scale = 2)
     public BigDecimal getIncome() {
         return income;
     }
@@ -97,7 +119,7 @@ public class UserEntity {
         this.income = income;
     }
 
-    @Column(name = "create_time")
+    @Column(name = "CREATE_TIME")
     public Date getCreateTime() {
         return createTime;
     }
@@ -107,13 +129,30 @@ public class UserEntity {
     }
 
 
-    @Column(name = "state", nullable = true, insertable = true, updatable = true, length = 45)
+    @Column(name = "STATE", nullable = true, insertable = true, updatable = true, length = 45)
     public String getState() {
         return state;
     }
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public UserEntity() {
+    }
+
+    public UserEntity(int id, String company, String name, String phone, String state, String business, String source, String counselor, BigDecimal income, String service_type, String customer_type) {
+        this.id = id;
+        this.company = company;
+        this.name = name;
+        this.phone = phone;
+        this.state = state;
+        this.business = business;
+        this.source = source;
+        this.counselor = counselor;
+        this.income = income;
+        this.service_type = service_type;
+        this.customer_type = customer_type;
     }
 
     @Override

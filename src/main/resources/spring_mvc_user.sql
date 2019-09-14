@@ -13,12 +13,28 @@
 
  Date: 08/04/2017 21:20:53 PM
 */
-
+use mysql;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
---  Table structure for `spring_mvc_user`
+--  Table structure for `records`
+-- ----------------------------
+
+DROP TABLE IF EXISTS `records`;
+CREATE TABLE `records` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `content` varchar(255) DEFAULT NULL,
+  `date` timestamp default current_timestamp on update current_timestamp,
+  `user_id` INT(11) NOT NULL,
+  `pay_date` DATETIME DEFAULT NULL ,
+  `NEXT_DATE` DATETIME DEFAULT NULL ,
+  `GIVE_UP_DATE` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
+-- ----------------------------
+--  Table structure for `customers`
 -- ----------------------------
 DROP TABLE IF EXISTS `customers`;
 CREATE TABLE `customers` (
@@ -28,18 +44,26 @@ CREATE TABLE `customers` (
   `phone` varchar(50) DEFAULT NULL,
   `state` varchar(2) DEFAULT NULL,
   `business` varchar(2) DEFAULT NULL,
-  `source` varchar(2) DEFAULT NULL,
+  `source` varchar(50) DEFAULT NULL,
   `counselor` varchar(255) DEFAULT NULL,
   `income` double(12, 2) DEFAULT NULL,
-  `createTime` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` timestamp default current_timestamp on update current_timestamp,
+  `service_type` VARCHAR(2) DEFAULT NULL ,
+  `customer_type` VARCHAR(2) DEFAULT NULL ,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 -- ----------------------------
---  Records of `spring_mvc_user`
+--  Records of `customers`
 -- ----------------------------
 BEGIN;
-INSERT INTO `customers` VALUES ('1', '有限公司', 'swift', '15527485868','1', '1','1', '销售人员', '0.00', now()), ('2', '有限公司2', 'jack', '15527485868','1', '2','1', '销售人员', '100.00', now());
+INSERT INTO `customers` VALUES ('1', '有限公司😃😃', 'swift', '15527485868','1', '1','1', '销售人员', '0.00', now(), '1','A'),
+  ('2', '有限公司2', 'jack', '15527485868','1', '2','1', '销售人员', '100.00', now(),'1','A');
+INSERT INTO `records` VALUES ('1','联系记录记录在此',now(), '1',now(),now() ,now() );
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+
+
