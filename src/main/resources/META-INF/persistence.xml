@@ -7,7 +7,7 @@
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
             <!-- 数据库连接的URL地址 -->
             <property name="hibernate.connection.url"
-                      value="jdbc:mysql://localhost:3306/mysql?serverTimezone=GMT%2B8"/>
+                      value="jdbc:mysql://localhost:3306/mysql?serverTimezone=GMT%2B8&amp;useSSL=false"/>
             <!-- 数据库连接的驱动 -->
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
             <!-- 数据库连接的用户名 -->

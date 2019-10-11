@@ -21,6 +21,13 @@ SET FOREIGN_KEY_CHECKS = 0;
 --  Table structure for `records`
 -- ----------------------------
 
+drop table if exists `tx_service_type`;
+create table `tx_service_type` (
+ `id` int(11) not null AUTO_INCREMENT,
+ `service_id` varchar(11) not null,
+ `service_name` varchar(50) not null
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
 DROP TABLE IF EXISTS `records`;
 CREATE TABLE `records` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
